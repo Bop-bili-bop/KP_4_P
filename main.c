@@ -23,7 +23,8 @@ int main()
         fflush(stdin);
     }
     while (choice != 1 && choice != 2);
-
+    int m = 0, n = 0;
+    float arr[m][n];
     for (double x = x1; x1 < x2 ? x <= x2 : x >= x2; x += dx)
     {
         if (fabs(x) > 360)
@@ -34,8 +35,9 @@ int main()
 
             double x_rad = to_rad(simpled_x); // Переведення в радіани
             double taylor_result = 0, lib_result = 0, diff = 0;
+
             if (choice == 1)
-            taylor_result = taylor_cos(x_rad, epsilon);
+                taylor_result = taylor_cos(x_rad, epsilon);
             lib_result = cos(x_rad);
             diff = fabs(taylor_result - lib_result);
             printf("  %-6.6lf    %-*.*lf    %-14.14lf    %-10.10lf  \n", x, abs(log10(epsilon)), abs(log10(epsilon)), taylor_result, lib_result, diff);
@@ -48,7 +50,12 @@ int main()
             taylor_result = taylor_cos(x_rad, epsilon);
             lib_result = cos(x_rad);
             diff = fabs(taylor_result - lib_result);
-            printf("  %-6.6lf    %-*.*lf    %-15.15lf    %-15.15lf  \n", x, abs(log10(epsilon)), abs(log10(epsilon)), taylor_result, lib_result, diff);
+            arr[m][n] = x;
+            arr[m+1][n+1] = taylor_result;
+            printf("%lf\t%lf\n", arr[m][n], arr[m+1][n+1]);
+            n++;
+            //printf("  %-6.6lf    %-*.*lf    %-15.15lf    %-15.15lf  \n", x, abs(log10(epsilon)), abs(log10(epsilon)), taylor_result, lib_result, diff);//
         }
+
     }
 }
