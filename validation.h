@@ -64,7 +64,8 @@ char negative_step(double value)
 {
     return value < 0 && value !=0;
 }
-double dx_numbers(char var) {
+double dx_validation(char var)
+{
     switch (var)
     {
         case 1:
@@ -75,6 +76,4 @@ double dx_numbers(char var) {
             return val_dx("Please enter step dx (dx = 0):", "Invalid input. Please try again", zero_step);
     }
 }
-
-
 #endif
