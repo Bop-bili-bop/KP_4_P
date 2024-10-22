@@ -9,22 +9,32 @@ int main()
     printf("This program calculates sin/cos from x1 to x2 with step dx\n");
     do
     {
-        const int size = 4;
-        char choice = 0;
+        const size_t size = 4;
+        char choice = 0, output_type = 0;
         double x1 = 0, x2 = 0, dx = 0, epsilon = 0;
         char *table_sin[] = {"Degrees", "Taylor_sin", "Table_sin", "Difference"};
         char *table_cos[] = {"Degrees", "Taylor_cos", "Table_cos", "Difference"};
+        double array[size] = {};
 
         x1 = val_double_input("x1=");
         x2 = val_double_input("x2=");
         dx = x1 == x2 ? dx_validation(0) : x1 < x2 ? dx_validation(1) : dx_validation(2);
         epsilon = val_double_input("epsilon=");
 
-        double array[size];
-
         do
         {
-            printf("Choose an option(1 - to calculate sin, 2 - to calculate cos):\n");
+            printf("Choose output type e/d (e for exponent/ d for float double)\n");
+            output_type = getchar();
+            if (output_type != 'e' && output_type != 'd')
+            {
+                printf("Invalid input.\n");
+            }
+            fflush(stdin);
+        }
+        while (output_type != 'e' && output_type != 'd');
+        do
+        {
+            printf("Choose an option (1 - to calculate sin, 2 - to calculate cos):\n");
             choice = getchar();
             if (choice != '1' && choice != '2')
             {
@@ -34,7 +44,10 @@ int main()
         }
         while (choice != '1' && choice != '2');
 
-        choice == '1' ? printf("%-20s %-25s %-25s %-25s\n", table_sin[0], table_sin[1], table_sin[2], table_sin[3]) : printf("%-20s %-25s %-25s %-25s\n", table_cos[0], table_cos[1], table_cos[2], table_cos[3]);
+        choice == '1'
+            ? printf("%-20s %-25s %-25s %-25s\n", table_sin[0], table_sin[1], table_sin[2], table_sin[3])
+            : printf("%-20s %-25s %-25s %-25s\n", table_cos[0], table_cos[1], table_cos[2], table_cos[3]);
+
         for (double x = x1; x1 < x2 ? x <= x2 : x >= x2; x += dx)
         {
             int m = 0;
@@ -50,7 +63,13 @@ int main()
             array[m + 2] = lib_result;
             array[m + 3] = diff;
             unsigned decimal_places = fabs(log10(epsilon));
-            printf("%-20.*lf %-25.*lf %-25.*lf %-25.*lf\n", decimal_places, array[m+0], decimal_places, array[m+1], decimal_places, array[m+2], decimal_places, array[m+3]);
+
+            output_type == 'e'
+                ? printf("%-20.*lf %-25.*e %-25.*e %-25.*e\n", decimal_places, array[m + 0], decimal_places,
+                         array[m + 1], decimal_places, array[m + 2], decimal_places, array[m + 3])
+                : printf("%-20.*lf %-25.*lf %-25.*lf %-25.*lf\n", decimal_places, array[m + 0], decimal_places,
+                         array[m + 1], decimal_places, array[m + 2], decimal_places, array[m + 3]);
+
             if (dx == 0)
             {
                 break;

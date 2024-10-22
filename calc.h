@@ -1,8 +1,6 @@
 #ifndef FUNC_H
 #define FUNC_H
-#include <stdio.h>
 #include <math.h>
-#include "validation.h"
 #define M_PI 3.14159265358979323846
 #define to_degrees(x) (x * 180.0 / M_PI)
 double taylor_sin(double x, double epsilon)
