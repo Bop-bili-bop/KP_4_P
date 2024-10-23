@@ -15,15 +15,13 @@ int main()
         char *table_sin[] = {"Degrees", "Taylor_sin", "Table_sin", "Difference"};
         char *table_cos[] = {"Degrees", "Taylor_cos", "Table_cos", "Difference"};
         double array[size] = {};
-
         x1 = val_double_input("x1=");
         x2 = val_double_input("x2=");
         dx = x1 == x2 ? dx_validation(0) : x1 < x2 ? dx_validation(1) : dx_validation(2);
-        epsilon = val_double_input("epsilon=");
-
+        epsilon = fabs(val_double_input("epsilon="));
         do
         {
-            printf("Choose output type e/d (e for exponent/ d for float double)\n");
+            printf("Choose output type e/d (e for exponent / d for float double)\n");
             output_type = getchar();
             if (output_type != 'e' && output_type != 'd')
             {
@@ -43,33 +41,27 @@ int main()
             fflush(stdin);
         }
         while (choice != '1' && choice != '2');
-
         choice == '1'
             ? printf("%-20s %-25s %-25s %-25s\n", table_sin[0], table_sin[1], table_sin[2], table_sin[3])
             : printf("%-20s %-25s %-25s %-25s\n", table_cos[0], table_cos[1], table_cos[2], table_cos[3]);
-
         for (double x = x1; x1 < x2 ? x <= x2 : x >= x2; x += dx)
         {
             int m = 0;
             double x_rad = fabs(x) > 360 ? to_rad(fmod(x, 2.0 * M_PI)) : to_rad(x);
             double taylor_result = 0, lib_result = 0, diff = 0;
-
             taylor_result = choice == '1' ? taylor_result = taylor_sin(x_rad, epsilon) : taylor_cos(x_rad, epsilon);
             lib_result = choice == '1' ? sin(x_rad) : cos(x_rad);
             diff = fabs(taylor_result - lib_result);
-
             array[m] = x;
             array[m + 1] = taylor_result;
             array[m + 2] = lib_result;
             array[m + 3] = diff;
             unsigned decimal_places = fabs(log10(epsilon));
-
             output_type == 'e'
-                ? printf("%-20.*lf %-25.*e %-25.*e %-25.*e\n", decimal_places, array[m + 0], decimal_places,
-                         array[m + 1], decimal_places, array[m + 2], decimal_places, array[m + 3])
-                : printf("%-20.*lf %-25.*lf %-25.*lf %-25.*lf\n", decimal_places, array[m + 0], decimal_places,
-                         array[m + 1], decimal_places, array[m + 2], decimal_places, array[m + 3]);
-
+                ? printf("%-20g %-25.*e %-25e %-25.*e\n", array[m + 0], decimal_places,
+                         array[m + 1], array[m + 2], decimal_places, array[m + 3])
+                : printf("%-20g %-25.*lf %-25e %-25.*lf\n", array[m + 0], decimal_places,
+                         array[m + 1], array[m + 2], decimal_places, array[m + 3]);
             if (dx == 0)
             {
                 break;
