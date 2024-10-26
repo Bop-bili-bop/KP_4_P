@@ -39,7 +39,8 @@ double val_char_input(const char *prompt)
 double val_dx(const char *prompt, const char* error_msg, char (*condition)(double))
 {
     double value = 0;
-    do {
+    do
+    {
         value = val_double_input(prompt);
         if (!condition(value))
         {

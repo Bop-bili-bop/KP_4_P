@@ -46,22 +46,21 @@ int main()
             : printf("%-20s %-25s %-25s %-25s\n", table_cos[0], table_cos[1], table_cos[2], table_cos[3]);
         for (double x = x1; x1 < x2 ? x <= x2 : x >= x2; x += dx)
         {
-            int m = 0;
             double x_rad = fabs(x) > 360 ? to_rad(fmod(x, 2.0 * M_PI)) : to_rad(x);
             double taylor_result = 0, lib_result = 0, diff = 0;
             taylor_result = choice == '1' ? taylor_result = taylor_sin(x_rad, epsilon) : taylor_cos(x_rad, epsilon);
             lib_result = choice == '1' ? sin(x_rad) : cos(x_rad);
             diff = fabs(taylor_result - lib_result);
-            array[m] = x;
-            array[m + 1] = taylor_result;
-            array[m + 2] = lib_result;
-            array[m + 3] = diff;
+            array[0] = x;
+            array[1] = taylor_result;
+            array[2] = lib_result;
+            array[3] = diff;
             unsigned decimal_places = fabs(log10(epsilon));
             output_type == 'e'
-                ? printf("%-20g %-25.*e %-25e %-25.*e\n", array[m + 0], decimal_places,
-                         array[m + 1], array[m + 2], decimal_places, array[m + 3])
-                : printf("%-20g %-25.*lf %-25e %-25.*lf\n", array[m + 0], decimal_places,
-                         array[m + 1], array[m + 2], decimal_places, array[m + 3]);
+                ? printf("%-20g %-25.*e %-25e %-25.*e\n", array[0], decimal_places,
+                         array[1], array[2], decimal_places, array[3])
+                : printf("%-20g %-25.*lf %-25e %-25.*lf\n", array[0], decimal_places,
+                         array[1], array[2], decimal_places, array[3]);
             if (dx == 0)
             {
                 break;
